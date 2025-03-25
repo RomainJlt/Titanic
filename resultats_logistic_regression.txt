@@ -1,0 +1,39 @@
+Dimensions du dataset: (891, 12)
+
+Survivants: 38.38%
+Non-survivants: 61.62%
+
+Caractéristiques sélectionnées: ['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']
+
+Accuracy: 0.7989
+F1-score: 0.7500
+
+Matrice de confusion:
+[[89 16]
+ [20 54]]
+
+Rapport de classification:
+              precision    recall  f1-score   support
+
+           0       0.82      0.85      0.83       105
+           1       0.77      0.73      0.75        74
+
+    accuracy                           0.80       179
+   macro avg       0.79      0.79      0.79       179
+weighted avg       0.80      0.80      0.80       179
+
+
+Coefficients du modèle (importance des caractéristiques):
+    Feature  Coefficient
+1       Sex     2.581452
+6  Embarked     0.222596
+5      Fare     0.002863
+2       Age    -0.031164
+4     Parch    -0.100612
+3     SibSp    -0.302857
+0    Pclass    -0.958064
+
+Scores de validation croisée:
+Scores: [0.79329609 0.79213483 0.78651685 0.76966292 0.8258427 ]
+Score moyen: 0.7935
+Écart-type: 0.0182
