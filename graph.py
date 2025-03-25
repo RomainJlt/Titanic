@@ -3,7 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Chargement des données
-df = pd.read_csv('train.csv')
+df = pd.read_csv('titanic/train.csv')
 
 # Diagnostic des valeurs manquantes
 print(df.isnull().sum())
