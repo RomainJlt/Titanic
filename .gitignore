@@ -1,0 +1,5 @@
+__pycache__/
+shit_folder/
+*.egg-info/
+data/*
+!data/.gitkeep
