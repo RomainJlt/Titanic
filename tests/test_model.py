@@ -54,3 +54,12 @@ def test_model_evaluation(trained_model, sample_titanic_data, preprocessor):
     assert 'accuracy' in evaluation
     assert 'f1_score' in evaluation
     assert 'roc_auc' in evaluation
+
+def test_model_train(sample_titanic_data, preprocessor):
+    """Test that the model can be trained correctly"""
+    X, y = preprocessor.fit_transform(sample_titanic_data)
+    model = TitanicModel()
+    model.train(X, y)
+    assert model.model is not None, "Le modèle n'a pas été entraîné correctement."
+    prediction = model.predict(X)
+    assert len(prediction) == len(y), "Le modèle ne prédit pas correctement sur les données d'entraînement."
