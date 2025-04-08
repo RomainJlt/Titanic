@@ -5,7 +5,6 @@ from src.model import TitanicModel
 
 @pytest.fixture
 def sample_titanic_data():
-    """Fixture that provides a small sample of Titanic data for testing"""
     return pd.DataFrame({
         'Survived': [1, 0, 1, 0],
         'Pclass': [1, 3, 1, 2],
@@ -19,20 +18,16 @@ def sample_titanic_data():
 
 @pytest.fixture
 def preprocessor():
-    """Fixture that provides a preprocessor instance"""
     return TitanicPreprocessor()
 
 @pytest.fixture
 def trained_model(sample_titanic_data, preprocessor):
-    """Fixture that provides a trained model using the sample data"""
     X, y = preprocessor.fit_transform(sample_titanic_data)
     model = TitanicModel()
     model.train(X, y)
     return model
 
 def test_model_prediction(trained_model, preprocessor):
-    """Test that the model can make predictions"""
-    # Create a single sample for prediction
     sample = pd.DataFrame({
         'Pclass': [1],
         'Sex': ['female'],
@@ -54,3 +49,4 @@ def test_model_evaluation(trained_model, sample_titanic_data, preprocessor):
     assert 'accuracy' in evaluation
     assert 'f1_score' in evaluation
     assert 'roc_auc' in evaluation
+
