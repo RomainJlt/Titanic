@@ -49,4 +49,3 @@ def test_model_evaluation(trained_model, sample_titanic_data, preprocessor):
     assert 'accuracy' in evaluation
     assert 'f1_score' in evaluation
     assert 'roc_auc' in evaluation
-
