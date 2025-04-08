@@ -11,7 +11,10 @@ def sample_titanic_data():
         'Pclass': [1, 3, 1, 2],
         'Sex': ['female', 'male', 'female', 'male'],
         'Age': [38, 26, 35, 27],
-        'Fare': [71.2833, 7.9250, 53.1000, 10.5000]
+        'SibSp': [1, 0, 1, 0],
+        'Parch': [0, 0, 0, 0],
+        'Fare': [71.2833, 7.9250, 53.1000, 10.5000],
+        'Embarked': ['S', 'S', 'C', 'Q']
     })
 
 @pytest.fixture
@@ -34,7 +37,10 @@ def test_model_prediction(trained_model, preprocessor):
         'Pclass': [1],
         'Sex': ['female'],
         'Age': [30],
-        'Fare': [50.0]
+        'SibSp': [0],
+        'Parch': [0],
+        'Fare': [50.0],
+        'Embarked': ['S']
     })
     X = preprocessor.transform(sample)
     prediction = trained_model.predict(X)
