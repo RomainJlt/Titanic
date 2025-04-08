@@ -1,18 +1,56 @@
-import numpy as np
+import pytest
+import pandas as pd
+from src.preprocessor import TitanicPreprocessor
 from src.model import TitanicModel
 
-def test_model():
-    # Données d'exemple
-    X = np.random.rand(100, 10)
-    y = np.random.randint(0, 2, 100)
-    
-    # Test du modèle
+@pytest.fixture
+def sample_titanic_data():
+    """Fixture that provides a small sample of Titanic data for testing"""
+    return pd.DataFrame({
+        'Survived': [1, 0, 1, 0],
+        'Pclass': [1, 3, 1, 2],
+        'Sex': ['female', 'male', 'female', 'male'],
+        'Age': [38, 26, 35, 27],
+        'SibSp': [1, 0, 1, 0],
+        'Parch': [0, 0, 0, 0],
+        'Fare': [71.2833, 7.9250, 53.1000, 10.5000],
+        'Embarked': ['S', 'S', 'C', 'Q']
+    })
+
+@pytest.fixture
+def preprocessor():
+    """Fixture that provides a preprocessor instance"""
+    return TitanicPreprocessor()
+
+@pytest.fixture
+def trained_model(sample_titanic_data, preprocessor):
+    """Fixture that provides a trained model using the sample data"""
+    X, y = preprocessor.fit_transform(sample_titanic_data)
     model = TitanicModel()
     model.train(X, y)
-    preds = model.predict(X)
-    probas = model.predict_proba(X)
-    
-    # Vérifications
-    assert len(preds) == 100
-    assert probas.shape == (100, 2)
-    assert (probas.sum(axis=1) - 1 < 1e-6).all()
+    return model
+
+def test_model_prediction(trained_model, preprocessor):
+    """Test that the model can make predictions"""
+    # Create a single sample for prediction
+    sample = pd.DataFrame({
+        'Pclass': [1],
+        'Sex': ['female'],
+        'Age': [30],
+        'SibSp': [0],
+        'Parch': [0],
+        'Fare': [50.0],
+        'Embarked': ['S']
+    })
+    X = preprocessor.transform(sample)
+    prediction = trained_model.predict(X)
+    assert prediction is not None
+    assert prediction.shape[0] == 1
+
+def test_model_evaluation(trained_model, sample_titanic_data, preprocessor):
+    """Test that the model can be evaluated"""
+    X, y = preprocessor.transform(sample_titanic_data), sample_titanic_data['Survived']
+    evaluation = trained_model.evaluate(X, y)
+    assert 'accuracy' in evaluation
+    assert 'f1_score' in evaluation
+    assert 'roc_auc' in evaluation
