@@ -1,2 +1,10 @@
+<<<<<<< HEAD
 data/
 README.md
+=======
+__pycache__/
+shit_folder/
+*.egg-info/
+data/*
+!data/.gitkeep
+>>>>>>> Axel
